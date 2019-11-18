@@ -11,40 +11,65 @@ import UIKit
 class PostListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
 
+    let postController = PostController()
+    
+    //setting above the viewDidLoad to allow it to be used in the rest of the VC class
+    var refreshControl = UIRefreshControl()
+    
     @IBOutlet weak var postTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        PostController.fetchPosts { (result) in
-//            switch result {
-//            case .success(let postToFetch):
-//                //self.fetchPostsAndUpdateUI(for: postToFetch)
-//            case .failure(let error):
-//                print("ERROR in \(#function) : \(error), \n---\n \(error.localizedDescription)")
-//            }
-//        }
+        postTableView.delegate = self
+        postTableView.dataSource = self
+        
+        postTableView.estimatedRowHeight = 45
+        postTableView.rowHeight = UITableView.automaticDimension
+        
+        postTableView.refreshControl = refreshControl
+        //adding objc to refresh control
+        refreshControl.addTarget(self, action: #selector(refreshControlPulled), for: .valueChanged)
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        postController.fetchPosts { (result) in
+            self.reloadTableView()
+        }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
+        return postController.posts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+        let cell = tableView.dequeueReusableCell(withIdentifier: "postCell", for: indexPath)
+        let post = postController.posts[indexPath.row]
+        
+        
+        cell.textLabel?.text = post.text
+        if let timestamp = post.timestamp {
+            
+            cell.detailTextLabel?.text = "\(post.username) - \(Date(timeIntervalSince1970: timestamp))"
+        } else {
+            cell.detailTextLabel?.text = "\(post.username)"
+        }
+        return cell
     }
     
-    func fetchPostsAndUpdateUI(for post: Post) {
-        
+    // MARK: - Custom Methods
+    
+    func reloadTableView() {
+        DispatchQueue.main.async {
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            self.postTableView.reloadData()
+        }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    @objc func refreshControlPulled() {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        postController.fetchPosts { (result) in
+            self.reloadTableView()
+            DispatchQueue.main.async {
+                self.refreshControl.endRefreshing()
+            }
+        }
     }
-    */
-
 }

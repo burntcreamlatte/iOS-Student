@@ -10,7 +10,7 @@ import Foundation
 
 
 struct Post: Decodable {
-    let timestamp: TimeInterval
+    let timestamp: TimeInterval?
     let username: String
     let text: String
     //let queryTimestamp
