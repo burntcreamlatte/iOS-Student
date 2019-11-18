@@ -9,10 +9,6 @@
 import Foundation
 
 
-struct PostsDictionary: Decodable {
-    //let posts: [Post]
-}
-
 struct Post: Decodable {
     let timestamp: TimeInterval
     let username: String
