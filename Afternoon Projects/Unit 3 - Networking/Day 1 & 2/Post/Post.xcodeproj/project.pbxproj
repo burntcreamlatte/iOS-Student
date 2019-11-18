@@ -7,17 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ABD3BAF9238328910077513E /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3BAF8238328910077513E /* Post.swift */; };
+		ABD3BAFB238330400077513E /* PostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3BAFA238330400077513E /* PostController.swift */; };
+		ABD3BAFD23833D960077513E /* PostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3BAFC23833D960077513E /* PostListViewController.swift */; };
 		B755BB7A219DE7EC00A9E085 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B755BB79219DE7EC00A9E085 /* AppDelegate.swift */; };
-		B755BB7C219DE7EC00A9E085 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B755BB7B219DE7EC00A9E085 /* ViewController.swift */; };
 		B755BB7F219DE7EC00A9E085 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B755BB7D219DE7EC00A9E085 /* Main.storyboard */; };
 		B755BB81219DE7ED00A9E085 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B755BB80219DE7ED00A9E085 /* Assets.xcassets */; };
 		B755BB84219DE7ED00A9E085 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B755BB82219DE7ED00A9E085 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		ABD3BAF8238328910077513E /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		ABD3BAFA238330400077513E /* PostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostController.swift; sourceTree = "<group>"; };
+		ABD3BAFC23833D960077513E /* PostListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListViewController.swift; sourceTree = "<group>"; };
 		B755BB76219DE7EC00A9E085 /* Post.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Post.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B755BB79219DE7EC00A9E085 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B755BB7B219DE7EC00A9E085 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B755BB7E219DE7EC00A9E085 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B755BB80219DE7ED00A9E085 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B755BB83219DE7ED00A9E085 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -35,6 +39,57 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		ABD3BAF2238328000077513E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B755BB79219DE7EC00A9E085 /* AppDelegate.swift */,
+				B755BB80219DE7ED00A9E085 /* Assets.xcassets */,
+				B755BB82219DE7ED00A9E085 /* LaunchScreen.storyboard */,
+				B755BB85219DE7ED00A9E085 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		ABD3BAF3238328070077513E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				ABD3BAF8238328910077513E /* Post.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		ABD3BAF42383280E0077513E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		ABD3BAF5238328160077513E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				ABD3BAF7238328230077513E /* Model Controllers */,
+				ABD3BAF62383281A0077513E /* View Controllers */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		ABD3BAF62383281A0077513E /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				ABD3BAFC23833D960077513E /* PostListViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		ABD3BAF7238328230077513E /* Model Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				ABD3BAFA238330400077513E /* PostController.swift */,
+			);
+			path = "Model Controllers";
+			sourceTree = "<group>";
+		};
 		B755BB6D219DE7EC00A9E085 = {
 			isa = PBXGroup;
 			children = (
@@ -54,12 +109,11 @@
 		B755BB78219DE7EC00A9E085 /* Post */ = {
 			isa = PBXGroup;
 			children = (
-				B755BB79219DE7EC00A9E085 /* AppDelegate.swift */,
-				B755BB7B219DE7EC00A9E085 /* ViewController.swift */,
+				ABD3BAF5238328160077513E /* Controllers */,
+				ABD3BAF42383280E0077513E /* Views */,
+				ABD3BAF3238328070077513E /* Models */,
+				ABD3BAF2238328000077513E /* Resources */,
 				B755BB7D219DE7EC00A9E085 /* Main.storyboard */,
-				B755BB80219DE7ED00A9E085 /* Assets.xcassets */,
-				B755BB82219DE7ED00A9E085 /* LaunchScreen.storyboard */,
-				B755BB85219DE7ED00A9E085 /* Info.plist */,
 			);
 			path = Post;
 			sourceTree = "<group>";
@@ -135,7 +189,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B755BB7C219DE7EC00A9E085 /* ViewController.swift in Sources */,
+				ABD3BAF9238328910077513E /* Post.swift in Sources */,
+				ABD3BAFD23833D960077513E /* PostListViewController.swift in Sources */,
+				ABD3BAFB238330400077513E /* PostController.swift in Sources */,
 				B755BB7A219DE7EC00A9E085 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -283,7 +339,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = Post/Info.plist;
+				INFOPLIST_FILE = Post/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -300,7 +356,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = Post/Info.plist;
+				INFOPLIST_FILE = Post/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
