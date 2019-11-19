@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PostListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class PostListViewController: UIViewController, UITableViewDataSource {
     
     //creating instance of PostController to locally use in this class file
     let postController = PostController()
@@ -53,12 +53,8 @@ class PostListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         
         cell.textLabel?.text = post.text
-        if let timestamp = post.timestamp {
-            
-            cell.detailTextLabel?.text = "\(post.username) - \(Date(timeIntervalSince1970: timestamp))"
-        } else {
-            cell.detailTextLabel?.text = "\(post.username)"
-        }
+        cell.detailTextLabel?.text = "\(post.username) - \(Date(timeIntervalSince1970: post.timestamp))"
+        
         return cell
     }
     
@@ -93,7 +89,7 @@ class PostListViewController: UIViewController, UITableViewDataSource, UITableVi
             messageText.placeholder = "Enter message"
             messageTextField = messageText
         }
-        //TODO; ENSURE ADDNEWPOSTWITH FUNCTION PASSES DATA THROUGH  
+        //TODO;
         let postAction = UIAlertAction(title: "Post", style: .default) { (postAction) in
             //making sure the fields !nil before passing them through
             guard let username = usernameTextField.text, !username.isEmpty, let text = messageTextField.text, !text.isEmpty else { return }
@@ -106,5 +102,15 @@ class PostListViewController: UIViewController, UITableViewDataSource, UITableVi
         postAlertController.addAction(postAction)
         postAlertController.addAction(cancelAction)
         self.present(postAlertController, animated: true)
+    }
+}
+
+extension PostListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row >= postController.posts.count - 1 {
+            postController.fetchPosts(reset: false) { (_) in
+                self.reloadTableView()
+            }
+        }
     }
 }

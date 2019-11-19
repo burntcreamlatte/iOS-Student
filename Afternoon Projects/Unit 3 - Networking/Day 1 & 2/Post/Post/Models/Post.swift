@@ -10,10 +10,13 @@ import Foundation
 
 
 struct Post: Codable {
-    let timestamp: TimeInterval?
+    let timestamp: TimeInterval
     let username: String
     let text: String
-    //let queryTimestamp
+    //TODO; CORRECTLY IMPLEMENT COMPUTED PROPERTY
+    var queryTimestamp: TimeInterval {
+        return self.timestamp - 0.00001
+    }
     
     init(username: String, text: String, timestamp: TimeInterval = Date().timeIntervalSince1970) {
         self.username = username

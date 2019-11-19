@@ -23,9 +23,23 @@ class PostController {
     //NOT putting a static function according to directions for project, lord help me
     func fetchPosts(reset: Bool = true, completion: @escaping(Result <[Post], PostAPIError>) -> Void) {
         
+        let queryEndInterval = reset ? Date().timeIntervalSince1970: posts.last?.queryTimestamp ?? Date().timeIntervalSince1970
+        
+        let urlParameters = ["orderBy":  "\"timestamp\"",
+                             "endAt": "\(queryEndInterval)",
+            "limitToLast": "15",]
+        
+        let queryItems = urlParameters.compactMap({ URLQueryItem(name: $0.key, value: $0.value) })
+        
         //unwrapping url to give it endpoint for json INSIDE the function
         guard let postURL = baseURL else { return completion(.failure(.invalidURL))}
-        let getterEndpoint = postURL.appendingPathExtension("json")
+        
+        var urlComponents = URLComponents(url: postURL, resolvingAgainstBaseURL: true)
+        urlComponents?.queryItems = queryItems
+        guard let finalURL = urlComponents?.url else { return completion(.failure(.invalidURL)) }
+        
+        let getterEndpoint = finalURL.appendingPathExtension("json")
+        print(getterEndpoint)
         //2 go to internet; data task
         var request = URLRequest(url: getterEndpoint)
         request.httpBody = nil; request.httpMethod = "GET"
@@ -43,21 +57,15 @@ class PostController {
                 let decoder = JSONDecoder()
                 let postsDictionary = try decoder.decode([String:Post].self, from: data)
                 //creating posts array to be appended to through our for-loop
-                var posts = [Post]()
+                //var posts = [Post]()
                 
-                for (_, value) in postsDictionary {
-                    posts.append(value)
-                }
-                posts.sort(by: {
-                    if let timestamp1 = $0.timestamp, let timestamp2 = $1.timestamp {
-                        return timestamp1 > timestamp2
-                    } else {
-                        return true
-                    }
-                })
+                let posts = postsDictionary.compactMap({ $0.value })
+                
                 //sorting posts based on timestamp values
+                let sortedPosts = posts.sorted(by: { $0.timestamp > $1.timestamp })
+                
                 //adding the sorted posts array to our SOT
-                self.posts = posts
+                self.posts = sortedPosts
                 return completion(.success(posts))
             } catch {
                 print("ERROR: \(error), \n---\n \(error.localizedDescription)")
