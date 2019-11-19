@@ -10,11 +10,14 @@ import UIKit
 
 class PostListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-
+    //creating instance of PostController to locally use in this class file
     let postController = PostController()
     
-    //setting above the viewDidLoad to allow it to be used in the rest of the VC class
+    //creating var as UIRefreshControl() to allow it to be used in the rest of the VC class
     var refreshControl = UIRefreshControl()
+    
+    
+    // MARK: - Outlets
     
     @IBOutlet weak var postTableView: UITableView!
     
@@ -34,7 +37,12 @@ class PostListViewController: UIViewController, UITableViewDataSource, UITableVi
             self.reloadTableView()
         }
     }
-
+    
+    // MARK: - Actions
+    @IBAction func addPostButtonTapped(_ sender: UIBarButtonItem) {
+        presentNewPostAlert()
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return postController.posts.count
     }
@@ -71,5 +79,32 @@ class PostListViewController: UIViewController, UITableViewDataSource, UITableVi
                 self.refreshControl.endRefreshing()
             }
         }
+    }
+    //TODO; ENSURE BOTH TEXT FIELDS POPULATE ALERT CONTROLLER
+    func presentNewPostAlert() {
+        let postAlertController = UIAlertController(title: "New Post", message: nil, preferredStyle: .alert)
+        var usernameTextField = UITextField()
+        postAlertController.addTextField { (usernameText) in
+            usernameText.placeholder = "Enter username"
+            usernameTextField = usernameText
+        }
+        var messageTextField = UITextField()
+        postAlertController.addTextField { (messageText) in
+            messageText.placeholder = "Enter message"
+            messageTextField = messageText
+        }
+        //TODO; ENSURE ADDNEWPOSTWITH FUNCTION PASSES DATA THROUGH  
+        let postAction = UIAlertAction(title: "Post", style: .default) { (postAction) in
+            //making sure the fields !nil before passing them through
+            guard let username = usernameTextField.text, !username.isEmpty, let text = messageTextField.text, !text.isEmpty else { return }
+            self.postController.addNewPostWith(username: username, text: text) { (_) in
+                self.reloadTableView()
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        postAlertController.addAction(postAction)
+        postAlertController.addAction(cancelAction)
+        self.present(postAlertController, animated: true)
     }
 }

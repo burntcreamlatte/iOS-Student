@@ -9,7 +9,7 @@
 import Foundation
 
 
-struct Post: Decodable {
+struct Post: Codable {
     let timestamp: TimeInterval?
     let username: String
     let text: String

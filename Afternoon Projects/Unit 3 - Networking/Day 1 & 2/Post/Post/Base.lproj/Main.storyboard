@@ -56,7 +56,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Sei-YU-nXL"/>
+                    <navigationItem key="navigationItem" id="Sei-YU-nXL">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="QMs-5n-aiJ">
+                            <connections>
+                                <action selector="addPostButtonTapped:" destination="BYZ-38-t0r" id="FUd-4w-qft"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="postTableView" destination="eLL-wF-uBm" id="whE-gP-Zf8"/>
                     </connections>
