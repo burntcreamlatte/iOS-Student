@@ -13,8 +13,8 @@ struct Post: Codable {
     let timestamp: TimeInterval
     let username: String
     let text: String
-    //TODO; CORRECTLY IMPLEMENT COMPUTED PROPERTY
     var queryTimestamp: TimeInterval {
+        //0.00001 seconds is to allow duplicate messages to show; otherwise would be exact same
         return self.timestamp - 0.00001
     }
     

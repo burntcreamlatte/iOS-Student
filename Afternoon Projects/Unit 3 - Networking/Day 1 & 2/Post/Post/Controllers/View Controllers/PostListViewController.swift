@@ -10,6 +10,8 @@ import UIKit
 
 class PostListViewController: UIViewController, UITableViewDataSource {
     
+    
+    // MARK: - Properties
     //creating instance of PostController to locally use in this class file
     let postController = PostController()
     
@@ -40,8 +42,12 @@ class PostListViewController: UIViewController, UITableViewDataSource {
     
     // MARK: - Actions
     @IBAction func addPostButtonTapped(_ sender: UIBarButtonItem) {
+        //calling function to allow alert controller to come into view after tapping bar button
         presentNewPostAlert()
     }
+    
+    
+    // MARK: - Tableview Data Source Methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return postController.posts.count
@@ -50,7 +56,6 @@ class PostListViewController: UIViewController, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "postCell", for: indexPath)
         let post = postController.posts[indexPath.row]
-        
         
         cell.textLabel?.text = post.text
         cell.detailTextLabel?.text = "\(post.username) - \(Date(timeIntervalSince1970: post.timestamp))"
@@ -76,20 +81,24 @@ class PostListViewController: UIViewController, UITableViewDataSource {
             }
         }
     }
-    //TODO; ENSURE BOTH TEXT FIELDS POPULATE ALERT CONTROLLER
+
+    //creating alert controller
     func presentNewPostAlert() {
         let postAlertController = UIAlertController(title: "New Post", message: nil, preferredStyle: .alert)
+        //text field for username
         var usernameTextField = UITextField()
         postAlertController.addTextField { (usernameText) in
+            //placeholder text
             usernameText.placeholder = "Enter username"
             usernameTextField = usernameText
         }
+        //text field for body text
         var messageTextField = UITextField()
         postAlertController.addTextField { (messageText) in
             messageText.placeholder = "Enter message"
             messageTextField = messageText
         }
-        //TODO;
+        
         let postAction = UIAlertAction(title: "Post", style: .default) { (postAction) in
             //making sure the fields !nil before passing them through
             guard let username = usernameTextField.text, !username.isEmpty, let text = messageTextField.text, !text.isEmpty else { return }
@@ -97,14 +106,18 @@ class PostListViewController: UIViewController, UITableViewDataSource {
                 self.reloadTableView()
             }
         }
+        //creating cancel button
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
+        //populating the alert controller with created actions
         postAlertController.addAction(postAction)
         postAlertController.addAction(cancelAction)
         self.present(postAlertController, animated: true)
     }
 }
 
+// MARK: - Class Extensions
+//delegate extension for tableview
 extension PostListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row >= postController.posts.count - 1 {
