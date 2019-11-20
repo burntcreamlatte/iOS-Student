@@ -16,7 +16,16 @@ class RepresentativeController {
         guard let unwrappedURL = baseURL?.appendingPathComponent("getall_reps_bystate") else { completion([]); return }
         //TODO;
         //cant be the best way to find url; urlcomponents??
-        let finalURL = unwrappedURL.appendingPathExtension("php?state=\(state)&output=json")
+        let extURL = unwrappedURL.appendingPathExtension("php")
+        //?state=\(state)&output=json
+        
+        let stateQueryItem = URLQueryItem(name: "state", value: state)
+        let outputQueryItem = URLQueryItem(name: "output", value: "json")
+        var components = URLComponents(url: extURL, resolvingAgainstBaseURL: true)
+        components?.queryItems = [stateQueryItem, outputQueryItem]
+        guard let finalURL = components?.url else { return completion([]) }
+        
+        print(finalURL)
         
     
         

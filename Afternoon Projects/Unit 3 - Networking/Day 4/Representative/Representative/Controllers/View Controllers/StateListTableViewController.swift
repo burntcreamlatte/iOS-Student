@@ -33,7 +33,12 @@ class StateListTableViewController: UITableViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    
+        if segue.identifier == "toRepDetail" {
+            guard let indexPath = tableView.indexPathForSelectedRow,
+                let destinationVC = segue.destination as? StateDetailTableViewController else { return }
+            destinationVC.state = States.all[indexPath.row]
+        }
+        
     }
 
 }
